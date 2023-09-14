@@ -8,34 +8,37 @@ def handle_client(client):
         if msg == '@SAIR':
             clients.remove(client)
             client.close()
-            print(f"Conexão encerrada por cliente {client_address}.")
+            print(f'Conexão encerrada por cliente {client_address}.')
             break
         else:
-            print(f"{client_address}: {msg}")
+            print(f'{client_address}: {msg}')
             for other_client in clients:
                 if other_client != client:
                     try:
-                        other_client.send(f"Cliente {client_address}: {msg}".encode('utf-8'))
+                        other_client.send(f'Cliente {client_address}: {msg}'.encode('utf-8'))
                     except:
                         clients.remove(other_client)
                         other_client.close()
-                        print("Conexão encerrada com cliente inativo.")
+                        print('Conexão encerrada com cliente inativo.')
                         break
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('0.0.0.0', 8888))
+##server.bind(('0.0.0.0', 8888))
+server_ip = '0.0.0.0'  #ou endereço IP da máquina onde o servidor ta sendo executado
+server_port = 8888     #porta do servidor
+server.bind((server_ip, server_port))
 server.listen()
 
 clients = []
 
 print('====== CHAT TERMINAL ======')
 print('='*30)
-print("Servidor esperando por conexões...")
+print('Servidor esperando por conexões...')
 
 while True:
     client, client_address = server.accept()
     clients.append(client)
-    print(f"Conexão estabelecida com {client_address}")
+    print(f'Conexão estabelecida com {client_address}')
 
     client_thread = threading.Thread(target=handle_client, args=(client,))
     client_thread.start()
