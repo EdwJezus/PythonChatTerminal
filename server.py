@@ -2,10 +2,10 @@ import socket
 import threading
 
 def handle_client(client):
-    client_address = client.getpeername()  # Obtém o endereço do cliente
+    client_address = client.getpeername()  #Obtém o endereço do cliente
     while True:
         msg = client.recv(1024).decode('utf-8')
-        if msg == 'tt':
+        if msg == '@SAIR':
             clients.remove(client)
             client.close()
             print(f"Conexão encerrada por cliente {client_address}.")
@@ -28,6 +28,8 @@ server.listen()
 
 clients = []
 
+print('====== CHAT TERMINAL ======')
+print('='*30)
 print("Servidor esperando por conexões...")
 
 while True:
@@ -37,3 +39,8 @@ while True:
 
     client_thread = threading.Thread(target=handle_client, args=(client,))
     client_thread.start()
+
+#IMPLEMENTAR
+####@ORDENAR: mostra as últimas 15 mensagens, ordenadas pelo horário de envio
+####@UPLOAD : faz upload de um arquivo para o servidor
+####@DOWNLOAD : faz download de um arquivo do servidor
