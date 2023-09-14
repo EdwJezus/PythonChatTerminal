@@ -10,7 +10,9 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('localhost', 8888))
 
 terminado = False
-print('Digite tt para finalizar o chat: ')
+print('====== CHAT TERMINAL ======')
+print('='*30)
+print('Digite @SAIR para finalizar o chat: ')
 
 receive_thread = threading.Thread(target=receive_messages, args=(client,))
 receive_thread.start()
@@ -18,7 +20,7 @@ receive_thread.start()
 while not terminado:
     mensagem = input()
     client.send(mensagem.encode('utf-8'))
-    if mensagem == 'tt':
+    if mensagem == '@SAIR':
         terminado = True
 
 client.close()
