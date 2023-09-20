@@ -7,7 +7,7 @@ def receive_messages(client):
         print(msg)
 
 server_ip = input('Digite o endereço IP do servidor: ')##PARA SER ALÉM DO LOCAL
-server_port = 8888  # Porta do servidor, PARA SER ALÉM DO LOCAL
+server_port = 8888##Porta do servidor PARA SER ALÉM DO LOCAL
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ##client.connect(('localhost', 8888))
@@ -24,7 +24,10 @@ receive_thread.start()
 while not terminado:
     mensagem = input()
     client.send(mensagem.encode('utf-8'))
-    if mensagem == '@SAIR':
+    if mensagem.upper() == '@SAIR':
         terminado = True
+        print('')
+        print('==================')
+        print('Conexão encerrada.')
 
 client.close()
